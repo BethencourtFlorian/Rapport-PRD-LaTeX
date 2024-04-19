@@ -51,9 +51,12 @@
 
 \academicsupervisor[di]{Jean-Charles}{BILLAUT}{jean-charles.billaut@univ-tours.fr}
 
+\academicsupervisor[di]{Marina}{VINOT}{marina.vinot@univ-tours.fr}
+
 \resume{%
 Ce projet vise à développer un modèle mathématique permettant d'optimiser le transport d'échantillons médicaux de patients atteints de la SLA. À termes l'outil développé sera capable de prendre des données de centres d'analyse en entrée et de fournir en sortie une solution optimale et un ensemble d'instructions à suivre pour chacun des centres d'analyse pour mettre en place cette solution optimale.\\
-Ce rapport introduit le sujet, présente un état de l'art sur les recherches similaires et décrit tout l'avancement du projet pour le semestre 9, de l'analyse du problème au début du développement du modèle.
+Le 2ème objectif consiste à créer un outil de visualisation de cette solution optimale avec la possibilité de pouvoir la modifier manuellement et d'évaluer l'impact de ces modifications sur "l'optimalité" de cette nouvelle solution. 
+Ce rapport introduit le sujet, présente un état de l'art sur les recherches similaires et décrit tout l'avancement du projet , de l'analyse du problème au début du développement du modèle et de l'application.
 Il contient également le planning prévu initialement et le vrai planning suivi, ainsi que les fonctionnalités du système.
 }
 
@@ -63,10 +66,11 @@ Il contient également le planning prévu initialement et le vrai planning suivi
 \motcle{Graphe}
 \motcle{Maladie de Charcot}
 
-             
 \abstract{
-This project aims to develop a mathematical model for optimizing the transportation of medical samples from patients with ALS. Ultimately, the developed tool will be capable of taking input data from analysis centers and providing an optimal solution as output, along with a set of instructions for each analysis center to implement this optimal solution.\\
-This report introduces the topic, presents a state-of-the-art overview of similar research, and describes the progress of the project for semester 9, from problem analysis to the early stages of model development. It also includes the initially planned schedule, the actual schedule followed, and the system's functionalities.
+This project aims to develop a mathematical model to optimize the transport of medical samples from ALS patients. Ultimately, the tool developed will be able to take data from analysis centers as input and provide as output an optimal solution and a set of instructions to follow for each of the analysis centers to implement this optimal solution. \\
+The 2nd objective consists of creating a visualization tool for this optimal solution with the possibility of being able to modify it manually and to evaluate the impact of these modifications on the "optimality" of this new solution.
+This report introduces the subject, presents a state of the art on similar research and describes the entire progress of the project, from the analysis of the problem to the start of the development of the model and the application.
+It also contains the schedule initially planned and the actual schedule followed, as well as the functionalities of the system.
 }
 \keyword{Constraints}
 \keyword{Medical samples}
@@ -83,12 +87,12 @@ Le transport d'échantillons médicaux entre différents centres d'analyses épa
 }{pic/graph1.png}{}
 
 \posterblock{Mise en œuvre}{
-Pour cela le modèle doit répondre à tout un ensemble de contraintes spécifiques à la conservation des échantillons sanguins tout en limitant la distance qu'ils parcourent et leur temps de trajet. Une fois perfectionnée, le modèle devra être implémenté sur un solveur mathématique.
-}{pic/graph2.png}{}
+Pour cela le modèle doit répondre à tout un ensemble de contraintes spécifiques à la conservation des échantillons sanguins tout en limitant la distance qu'ils parcourent et leur temps de trajet. Une fois perfectionné, un 2ème outil permettra de visualiser et modifier cette solution optimale pour correspondre au mieux aux contraintes qui n'auraient pas été spécifiées dans le modèle.
+}{pic/structuresysteme.png}{}
 
 \posterblock{Résultats attendus}{
-On attend une solution approchée voire optimale du problème avec un tableau contenant l'ensemble du flux des échantillons entre les différentes villes ainsi qu'un ensemble d'instructions à suivre pour appliquer cette solution.
-}{pic/graph3.png}{}
+On attend une solution approchée voire optimale du problème avec un tableau contenant l'ensemble du flux des échantillons entre les différentes villes ainsi qu'un ensemble d'instructions à suivre pour appliquer cette solution. On attend également une application capable d'imager ce tableau en une carte interactive.
+}{pic/appweb.png}{}
 
 
 \newglossaryentry{graphe}
@@ -103,9 +107,9 @@ On attend une solution approchée voire optimale du problème avec un tableau co
 	description={L'aliquotage est une opération consistant à séparer un tube en plusieurs tubes de quantité plus faible.}
 }
 
-\newglossaryentry{heuristiques}
+\newglossaryentry{heuristique}
 {
-	name=heuristiques,
+	name=heuristique,
 	description={Une heuristique est une méthode de calcul qui fournit rapidement une solution réalisable, pas nécessairement optimale ou exacte, pour un problème d'optimisation difficile.}
 }
 
@@ -129,7 +133,7 @@ Présentation du contexte des acteurs et des enjeux.
 Acteurs:
 \begin{itemize}
 \item Client : BLASCO Hélène
-\item MOA : BILLAUT Jean-Charles
+\item MOA : BILLAUT Jean-Charles, VINOT Marina
 \item Auteur : BETHENCOURT Florian\\
 \end{itemize}
 
@@ -154,7 +158,7 @@ L'objectif final de ce projet est de proposer un algorithme (approché et/ou exa
 Le premier objectif est d'implémenter un modèle intégrant le plus possible de contraintes liées à la répartition des échantillons sanguins, à savoir : 
 \begin{itemize}
     \item Contrainte de congélation : Afin de préserver au maximum l'intégrité des échantillons, ceux-ci sont congelés lors du transport (à -80°C ou -20°C) et décongelés lors des analyses. Chaque cycle de congélation/décongélation (appelé cycle C/D par la suite) détériore l'échantillon, il faut donc les limiter au maximum. De plus certaines analyses requiert le même nombre de cycle C/D pour tous les échantillons.
-    \item Contrainte d'aliquotage : L'\gls{aliquotage} est une opération consistant à séparer un tube en plusieurs tubes de quantité plus faible. Cependant c'est une opération fastidieuse et source d'erreurs, il faut donc essayer de minimiser son utilisation
+    \item Contrainte d'aliquotage : L'\gls{aliquotage} est une opération consistant à séparer un tube en plusieurs tubes de quantité plus faible. Cependant c'est une opération fastidieuse et source d'erreurs, il faut donc essayer de minimiser son utilisation.
     \item Contraintes liées au flux : Ce sont des contraintes évidentes mais obligatoires et nécessaires au bon fonctionnement du modèle. Une ville ne peut pas envoyer plus que ce qu'elle reçoit, les quantités envoyées ne peuvent pas dépasser la capacité max d'un tube, ect...\\
 \end{itemize}
 
@@ -163,19 +167,16 @@ Ce sont les contraintes principales, mais en fonction de l'avancée du projet on
 \end{flushleft}
 
 \begin{flushleft}
-Le 2ème objectif principal est d'implémenter le modèle sur un solveur mathématique afin de pouvoir l'analyser. Cela permettra en premier lieu d'avoir un aperçu des performances et de la pertinence du modèle notamment lors de la mise à l'échelle, et de le modifier en fonction des résultats obtenus. Dans un second temps on pourra se servir de ces résultats pour rédiger la marche à suivre par chacun des centres hospitaliers.
+Le 2ème objectif principal est de développer un outil de visualisation et de modification de la solution optimale proposée par le modèle. Cet outil prendra la forme d'une carte interactive où les échanges des échantillons entre les différents centres d'analyse seront représentés par des arcs. Il sera ensuite possible de modifier les informations de chacun de ces arcs (départ, arrivée, quantité envoyée,...) et de sauvegarder la nouvelle solution modifiée par l'utilisateur (probablement un personnel médical). Idéalement l'application permettra également d'évaluer l'impact des modifications et "l'écart" par rapport à la solution optimale initiale.
 \end{flushleft}
 
 \begin{flushleft}
 Le 3ème et dernier objectif principal est de développer un outil d'aide multicritère à la décision qui optimise le flux de ces échantillons, tout en respectant les contraintes imposées.
-Cette dernière partie ne sera pas abordée pour cette année, mais fera l'étude d'un autre PRD suivant celui-ci.
+Cet outil serait une amélioration de l'application mentionnée précédemment, avec notamment la possibilité de généraliser la solution à d'autres études médicales en dehors même de la maladie de Charcot.\\
+Cette dernière partie ne sera pas abordée pour cette année, mais fera l'étude d'un stage reprenant ce PRD.
 On se focalisera plutôt sur une modélisation fonctionnelle du problème, ainsi qu'une documentation complète et compréhensible de son implémentation afin de faciliter au mieux la reprise de ce sujet.  
 \end{flushleft}
 
-\section{Hypothèses}
-
-À partir d'un certain nombre de contraintes et surtout lors de la mise à l'échelle, le modèle créé sur Gusek ne pourra plus être solvable en temps acceptable.\\
-Il faudra donc passer sur un solveur mathématique, mais cela signifie qu'on ne pourra plus tester la faisabilité du modèle à l'avance, et par conséquent qu'il faudra modifier les contraintes "à l'aveugle". Ainsi il sera préférable de complexifier au maximum le modèle sur Gusek avant de l'implémenter.
 \pagebreak
 
 \section{Bases méthodologiques}
@@ -183,7 +184,8 @@ Il faudra donc passer sur un solveur mathématique, mais cela signifie qu'on ne 
 \item Les outils : 
 \begin{itemize}
     \item Pour la gestion de projet, on utilisera le diagramme de Gantt pour contrôler le déroulement du projet.
-    \item Pour la modélisation du modèle, on utilisera « Gusek ». Le solveur mathématique n'a pas encore été fixé mais on utilisera probablement « Cplex ».
+    \item Pour la modélisation du modèle, on utilisera « Gusek ». Dans la 2ème partie du projet, les \glspl{heuristique} développées par M.Billaut en Python. 
+    \item Pour l'application Web, on utilisera le framework Angular (Typescript), la bibliothèque Leaflet pour la carte et Visual Studio Code pour l'IDE.
     \item Pour la rédaction du rapport, on utilisera « LaTex ».\\
 \end{itemize}
 
@@ -197,8 +199,8 @@ Les attendus et la définition du projet étant bien fixées, ce modèle convien
     \label{Modèle en cascade}
 \end{figure*}
 
-Pour le semestre 9, on nous demande de nous concentrer sur la prise en main du sujet et la définition précise du travail à affectuer. Cela correspond aux tâches d'Exigences et d’Analyse.
-J'ai cependant déjà pu m'avancer sur la partie Conception comme nous le verrons dans la suite du rapport.
+Pour le semestre 9, on nous demande de nous concentrer sur la prise en main du sujet et la définition précise du travail à effectuer. Cela correspond aux tâches d'Exigences et d’Analyse.
+J'ai cependant déjà pu m'avancer sur la partie Conception dès le mois de novembre comme nous le verrons dans la suite du rapport.
 \end{itemize}
 
 \chapter{Description générale}
@@ -209,6 +211,7 @@ L’environnement de développement est le suivant :
     \item Le système d’exploitation : Windows;
     \item Le logiciel de modélisation : Gusek;
     \item Le matériel pour le développement : Machine personnelle ou PC fixe de Polytech\\
+    \item L'IDE utilisé pour le développement : Visual Studio Code
 \end{itemize}
 
 Les différents acteurs du projet peuvent également être amenés à faire des réunions en présentiel ou visio par Teams pour discuter des contraintes à rajouter ou modifier, ou simplement s'échanger des mails.
@@ -220,14 +223,15 @@ Seul l'étudiant ou l'encadrant sera amené à utiliser le logiciel tel quel, é
 \pagebreak
 
 \section{Fonctionnalités du système}
-Les fonctionnalités du système sont plutôt simples : \\
+\subsection{Fonctionnalités du modèle}
+Les fonctionnalités du modèle sont plutôt simples :
 
-\begin{figure}[h]
+\begin{figure*}[h!]
     \centering
-    \includegraphics[width=0.9\textwidth]{pic/usecase.png}
-    \caption{Diagramme de cas d'utilisation}
-    \label{fig:use_case1}
-\end{figure}
+    \includegraphics[width=0.9\textwidth, scale=0.8]{pic/usecasemodele.png}
+    \caption{Diagramme de cas d'utilisation du modèle}
+    \label{Diagramme de cas d'utilisation du modèle}
+\end{figure*}
 
 En pratique, les données d'entrée vont très peu changer : elles correspondent aux villes d'études (5 dans notre cas), et aux quantités produites et demandées d'échantillons de différents types pour chaque ville.
 
@@ -235,15 +239,37 @@ Si le système trouve une solution, les résultats envoyés seront les flux d'é
 
 La partie Modélisation mathématique rentre plus en détail dans le fonctionnement du modèle implémenté.
 
+\subsection{Fonctionnalités de l'application}
+
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{pic/usecaseapp.png}
+    \caption{Diagramme de cas d'utilisation de l'application}
+    \label{Diagramme de cas d'utilisation de l'application}
+\end{figure*}
+
+L'application nécessite en entrée la solution proposée par le modèle, i.e le flux d'échanges pour tous les tubes. Il lui faut également des données géographiques afin d'initialiser la carte et poser des marqueurs sur les villes des centres d'analyse.
+
+Après avoir sélectionné le tube, les arcs associés sont dessinés sur la carte et le tableau associé s'affiche afin de permettre la modification de la solution.
+
+Enfin les conditions pour la sauvegarde visent à assurer que chaque centre soit desservi comme prévu (que la demande soit respectée), qu'il n'y ait pas de doublons, de boucle, ect...
+
 \section{Structure générale du système}
 
-Il n'y a que 4 composantes dans le systèmes, à savoir : 
+Il n'y a que 2 composantes principales dans le système, à savoir : 
 \begin{itemize}
-    \item Le modèle construit sur Gusek
-    \item Son implémentation sur le solveur mathématique
-    \item Un ou plusieurs fichiers de données d'entrée
-    \item Un ou plusieurs fichiers de sortie contenant les résultats du solveur
+    \item Le modèle construit sur Gusek, ou l'\gls{heuristique} de M.Billaut
+    \item L'application web de visualisation
 \end{itemize}
+
+Il y a ensuite des fichiers/données d'entrée et de sortie pour chacun, notamment les variables de l'étude médicale et les coordonnées des centres d'analyse.
+
+\begin{figure*}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth, height=7cm]{pic/structuresysteme.png}
+    \caption{Diagramme de la structure générale du système}
+    \label{Diagramme de la structure générale du système}
+\end{figure*}
 
 \chapter{État de l'art / Veille technologique}
 
@@ -263,9 +289,9 @@ Le problème du voyageur de commerce (TSP en anglais pour Travelling Salesman Pr
 Le TSP considère un ensemble de villes, où le but est de passer une seule et unique fois par chacune d'entre elles et de revenir au point de départ, en minimisant au maximum la distance du trajet parcouru.\\
 Le VRP étend le problème à un ensemble de trajets et de véhicules, où l'objectif est d'affecter à chaque ressource un trajet permettant de couvrir l'ensemble des villes à traverser, tout en répartissant la charge de façon équitable entre toutes les ressources. 
 
-Par exemple dans ce papier \cite{VRP}, les 3 chercheurs se focalisent sur la résolution d'un VRP où les "clients" sont des centres de collecte du sang et où le "dépôt" est le centre d'analyse. Ils utilisent pour cela différentes \gls{heuristiques} et les comparent entre elles, le but étant de trouver le nombre optimal de camions pour assurer au mieux la collecte et le transport des échantillons en respectant différentes contraintes de temps, d'argent et de conservation des échantillons sanguins.
+Par exemple dans ce papier \cite{VRP}, les 3 chercheurs se focalisent sur la résolution d'un VRP où les "clients" sont des centres de collecte du sang et où le "dépôt" est le centre d'analyse. Ils utilisent pour cela différentes \glspl{heuristique} et les comparent entre elles, le but étant de trouver le nombre optimal de camions pour assurer au mieux la collecte et le transport des échantillons en respectant différentes contraintes de temps, d'argent et de conservation des échantillons sanguins.
 
-Notre sujet prend en quelque sorte le problème du VRP à l'envers : Au lieu d'aller du client au dépôt comme dans la plupart des études concernant le transport d'échantillons de sang, on part du dépôt pour livrer tous les clients. Il conviendrait donc de replacer le môt "dépôt" par source qui fait plus de sens dans notre cas, ce qui nous donne un schéma comme cela : 
+Notre sujet prend en quelque sorte le problème du VRP à l'envers : Au lieu d'aller du client au dépôt comme dans la plupart des études concernant le transport d'échantillons de sang, on part du dépôt pour livrer tous les clients. Il conviendrait donc de replacer le mot "dépôt" par source qui fait plus de sens dans notre cas, ce qui nous donne un schéma comme cela : 
 
 \begin{figure*}[h]
     \centering
@@ -281,13 +307,9 @@ On peut facilement mettre en lumière les différences entre les problèmes clas
 	\item L'échantillon n'a pas besoin de revenir au point de départ, puisqu'on considère que les cohortes se servent en premier avant de distribuer le reste des échantillons aux autres centres d'analyse.
 \end{itemize}
 
-Toutes ces raisons font que les méthodes de résolution classique du VRP ne peuvent pas s'appliquer à notre problème, ce qui implique de trouver de nouveaux algorithmes et méthodes de résolution.
-
-
+Toutes ces raisons font que les méthodes de résolution classique du VRP ne peuvent pas s'appliquer à notre problème, ce qui implique de trouver de nouveaux algorithmes et méthodes de résolution.         
 \chapter{Analyse et conception}
-
 \section{Analyse}
-
 \subsection{Explication du graphe}
 Afin de modéliser correctement le modèle de façon mathématique, on a décidé de le représenter sous forme d'un graphe, où les villes représentent les sommets et les arcs correspondent à l'envoi d'échantillons d'une ville à l'autre.
 
@@ -298,17 +320,16 @@ En plus des 5 villes, on ajoute également 3 sommets "fictifs" :
 	\item P : C'est le sommet Puits, qui va recevoir toutes les quantités en trop non utilisées\\
 \end{itemize}
 
-On peut alors obtenir un graphe comme celui-ci : \\
+On peut alors obtenir un graphe comme celui-ci :
 
 \begin{figure*}[ht]
     \centering
-    \includegraphics[width=0.9\textwidth]{pic/graph.png}
+    \includegraphics[width=0.7\textwidth, height=5cm]{pic/graph.png}
     \caption{Exemple de graphe possible}
     \label{Exemple de graphe possible}
 \end{figure*}
+\textcolor{red}{En rouge : Flux d'échantillons des patients de Tours}
 
-
-\textcolor{red}{En rouge : Flux d'échantillons des patients de Tours}\\
 \textcolor{green}{En vert : Flux d'échantillons des patients de Lille}\\
 
 On aurait pu utiliser des arcs réflexifs (arc qui part d'un sommet et pointe vers le même sommet) pour dire qu'une ville utilise une partie des échantillons mais il était plus simple de faire ça avec un sommet bien distinct pour la création des contraintes du modèle (voir partie Modélisation mathématique).
@@ -324,14 +345,10 @@ Elles sont au nombre de 6 :
 	\item Intégrer une notion de temps aux analyses, car certaines sont plus longues que d'autres ou bien prioritaires.
 	\item Enfin mixer des échantillons de Tours et de Lille dans les analyses afin qu'ils soient traités en même temps.\\
 
-Ces contraintes sont susceptibles d'être modifiées en fonction des échanges avec Dr.BLASCO par rapport à l'avancée du modèle et des potentielles difficultés rencontrées.
 \end{itemize}
-\pagebreak
 
 \section{Modélisation mathématique}
-
 \subsection{Données}
-
 \subsubsection{Données d'entrée constantes}
 
 \begin{itemize}
@@ -363,7 +380,7 @@ Pour résumer, si on a PhiT["Tours", "Poitiers", "SER", "2"] = 0.2, cela signifi
 \end{itemize}
 
 Plutôt que d'utiliser 2 flux différents, on pourrait aussi pu rajouter une dimension de plus de taille ville\_dep. Cela est un choix arbitraire et il est tout à fait possible que l'on change la façon dont on définit le flux en fonction des contraintes et de la vitesse de résolution.
-\pagebreak
+
 \subsection{Contraintes dîtes "de graphe"}
 
 Ces contraintes forcent le modèle à respecter notre vision du problème en graphe. Certaines contraintes sont spécifiques à Tours, mais il suffit de les dupliquer pour Lille. Comme dit plus haut il est également possible de rassembler les 2 flux et de faire une contrainte plus générale en rajoutant une dimension.
@@ -434,7 +451,7 @@ Elles permettent de vérifier que les quantités envoyées soient égales aux qu
 
 La contrainte de flot assure que pour chaque ville, la somme de ce qu'elle reçoit sur un tube est égale à la somme de ce qu'elle envoie de ce même tube.\\
 La contrainte de boucle assure que pour chaque tube, la somme de ce qui est envoyé sur les sommets OK et P, toute ville confondue, est égale à la quantité initiale envoyée sur Tours. 
-
+\pagebreak
 \subsection{Contraintes imposées}
 
 Ces contraintes forcent le modèle à respecter les attentes réelles des centres d'analyse : 
@@ -454,10 +471,10 @@ Elles permettent de d'identifier si un tube a été congelé et de compter son n
 La contrainte congelT est complexe à définir et ne prend pas en compte tous les cas de figure. Néanmoins elle fonctionne comme cela pour l'instant :\\
 Pour chaque ville et chaque tube qu'elle envoie, la somme de tout ce qu'elle reçoit via d'autres villes sur ce tube \textbf{moins} la somme de tout ce qu'elle envoie aux autres villes (OK et P exclus !) depuis ce tube est inférieure ou égale à la variable de congélation de cette ville pour ce tube multiplié par HV (une très grande valeur).\\
 
-L'idée derrière cette contrainte est si la somme de ce que la ville envoie est strictement comprise entre 0 e ce qu'elle reçoit, cela signifie que le tube a été décongelé pour pouvoir se servir, et recongelé pour envoyer le reste.
+L'idée derrière cette contrainte est si la somme de ce que la ville envoie est strictement comprise entre 0 et ce qu'elle reçoit, cela signifie que le tube a été décongelé pour pouvoir se servir, et recongelé pour envoyer le reste.
 congelT étant une variable binaire, si la valeur à gauche est strictement supérieure à 0 alors congelT passera à 1 pour conserver l'égalité car 1*HV dépassera toujours le flux.
 
-Il serait facile de définir congelT avec 2 constraintes différentes, mais la méthode de résolution de Gusek ne le permet pas (le programme tourne en boucle car valider une contrainte invalide l'autre).
+Il serait facile de définir congelT avec 2 contraintes différentes, mais la méthode de résolution de Gusek ne le permet pas (le programme tourne en boucle car valider une contrainte invalide l'autre).
 
 \paragraph{nbCongelT}
 
@@ -479,7 +496,6 @@ envoiT est relativement simple à définir : pour chaque échange entre 2 villes
 \paragraph{aliT}
 
 De la même manière que nbCongelT, aliT compte le nombre d'envoi d'un tube depuis une même ville. A noter qu'il y a réellement \gls{aliquotage} à partir de aliT = 2.
-\pagebreak
 
 \subsection{Fonction objectif}
 
@@ -496,37 +512,147 @@ On identifie en premier les variables présentes dans la fonction, à ce stade l
 On définit C et A respectivement comme le nombre max de cycles C/D et d'aliquots parmi tous les tubes, et on essaie de minimiser la somme des 3 variables avec le puits.\\
 C'est une fonction objectif provisoire, car chaque variable est censée avoir un poids qui lui est associée pour définir un ordre de priorité. Par exemple il est peut-être plus important de limiter le nombre de cycles C/D quitte à augmenter l'\gls{aliquotage}.
 
-\chapter{Bilan du semestre 9}
+\subsection{Amélioration du modèle}
 
-Toute la partie de prise en main du sujet et la rédaction du cahier des spécifications s'est déroulée sans accroc et même avec un peu d'avance, étant donné qu'il n'y avait pas énormément de documentation à consulter et que le système possède peu de fonctionnalités.\\
+Le modèle créé sur Gusek nous a permis d'avoir une vision plus précise du problème et des difficultés à prendre en compte. Il a cependant ses limites, que ça soit en termes de performances ou de structure générale.\\
+C'est pourquoi M.Billaut et Mme.Vinot ont décidé de laisser le modèle Gusek tel quel afin de se concentrer sur l'élaboration d'heuristiques, qui pourraient résoudre plus intelligemment la répartition du flux d'échantillons en se servant notamment de nos réflexions conjointes sur le modèle initial.\\
+Cela m'a également permis de passer à la 2ème partie du PRD, i.e. l'application de visualisation.
+
+\section{Application de visualisation de la solution}
+
+\subsection{Présentation générale}
+
+L'outil de visualisation de la solution optimale a été développé sous la forme d'une application Web, disposant à  ce jour que d'une seule page principale. Cette page contient une carte interactive avec des marqueurs sur l'emplacement des centres d'analyse, un formulaire pour sélectionner le flux du tube à visualiser et enfin un tableau d'arcs qui se remplit adéquatement avec les informations du tube sélectionné.\\
+
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{pic/appweb.png}
+    \caption{Page principale de l'application}
+    \label{appweb}
+\end{figure*}
+
+Il est possible de modifier le départ et l'arrivée de chaque arc via les listes déroulantes dans le tableau, et de voir les arcs sur la carte être modifiés adéquatement.
+
+Le bouton "Sauvegarder" permet de vérifier que les modifications apportées à la solution soient cohérentes et réalisables (pas de boucle, demande de chaque centre respectée,...), et affiche un message d'erreur ou de réussite en fonction du résultat.\\
+Il n'y a pas de véritable sauvegarde des modifications, mais nous y reviendrons plus tard dans les difficultés rencontrées. 
+
+\subsection{Structure de l'application}
+
+L'application a été développée en Angular, ce qui impose de réfléchir en termes de composants. Ainsi j'ai décidé de développer 3 composants différents, un principal contenant la carte et 2 autres composants dits "enfants" contenant respectivement le formulaire de sélection du tube et le tableau d'arcs (avec le bouton sauvegarder).\\
+
+La notion de composant enfant et parent permet une communication entre eux et de passer en paramètre des données initialisées dans un composant externe. De plus, Angular permet de développer des "services" permettant une connexion plus générale entre tous les composants indifféremment des relations enfant/parent, tout en factorisant des méthodes coûteuses en temps de calcul.\\
+L'application contient donc 2 services, 1 pour la construction d'un objet JSON de la solution à partir des données d'entrée et de sortie du modèle, et 1 autre pour l'affichage des arcs à la fois sur la carte et dans le tableau. Nous reviendrons plus en détail sur la construction de la solution.\\
+
+Voici un schéma représentant la structure de l'application :
+
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{pic/structureapp.png}
+    \caption{Structure de l'application}
+\end{figure*}
+
+\subsubsection{SolutionService}
+
+Le service Solution gère la plupart des fonctionnalités de l'application et il est relativement dense, notamment à cause des 3 fichiers d'entrée différents qu'il utilise :\\
+
+\begin{itemize}
+	\item map.geojson : Ce fichier contient la liste des villes qu'on devra afficher sur la carte, avec leurs coordonnées géographiques. Il a été créé de façon arbitraire par moi-même via un site internet. Cela signifie qu'il faudra recréer le fichier de toutes pièces si l'on veut changer les villes d'exemple.
+	\item instance.txt : C'est le fichier d'entrée de l'heuristique, qui précise entre autres le nombre de villes et de types de prélèvements, et la demande de chaque centre.
+	\item solution\_instance.txt :C'est le fichier de sortie de l'heuristique i.e. la solution optimale, qui à ce jour contient uniquement la répartition des villes et des échanges entre les tubes. Par exemple le tube n°2 de sérum de la cohorte de Poitiers (coir image) \ref{fig:appweb} fera le lien entre les villes de Poitiers, Bordeaux, Toulouse, rennes et Reims.\\
+    Il n'y a cependant pas encore de notion de quantité envoyée ou de nombre d'aliquots, uniquement la liste des villes desservies pour chaque tube.\\
+\end{itemize}
+
+\pagebreak
+
+La fonction parseSolution() est la méthode principale du service avec presque une centaine de lignes, qui se charge de créer un objet JSON structuré comme tel:
+
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{pic/interfacesolution.png}
+    \caption{Structure de l'objet Solution}
+\end{figure*}
+
+Le paramètre important ici est le tableau de cohortes, qui va contenir une ville cohorte et un tableau de Type, où chaque Type est composé d'un nom (LCR, SER, ...) et d'un tableau de Tube, où chaque Tube va être composé d'un numéro, d'un volume donné et d'une liste d'arcs correspondant à la répartition énoncée plus haut.\\
+
+Les objets Solution, City, Cohorte, Type, Tube et Arc sont encapsulés dans des interfaces afin de permettre une meilleure lisibilité et d'être plus facilement modifiables, si par exemple on, souhaite rajouter un champ pour chaque Tube.\\
+
+Le soucis dans la fonction parseSolution() est qu'elle est complètement dépendante de la nomenclature des fichiers d'entrée. On les parcourt ligne par ligne et la moindre modification dans la structure de ces fichiers imposerait de redévelopper la fonction en détail.\\
+
+Cependant le développement en service Angular nous permet de gagner beaucoup de temps de calcul. En effet, la solution est construite une seule fois lors de l'ouverture de l'application, puis chaque composant va lire et modifier la même instance de l'objet ou une copie, mais sans avoir à tout recalculer.
+Le service Arc fonctionne sur le même principe, mais il permet de "notifier" les composants lors d'une modification du tableau d'arcs afin qu'elle se répercute à la fois dans le tableau et sur la carte.
+
+\subsection{Documentation et commentaires}
+
+Nous savions depuis le début de l'année que ce projet allait être repris, ainsi l'accent a été mis sur la rédaction d'une documentation complète à fournir au prochain étudiant en parallèle du développement de l'application, visant à faciliter la reprise du sujet et du code. Ce rapport en fait partie, mais j'ai également généré une documentation détaillée de l'ensemble du code grâce à l'outil Compodoc, et accessible via une ligne de commande précisée dans le README du répertoire Git, avec d'autres instructions sur l'installation du projet notamment.\\
+
+Cette documentation précise le but de chaque fonction, le type de leurs paramètres et les membres de chaque classe et chaque interface. Elle se présente comme cela:
+
+\begin{figure*}[h]
+    \centering
+    \includegraphics[width=0.9\textwidth]{pic/compodoc.png}
+    \caption{Exemple de documentation du code avec Compodoc}
+\end{figure*}
+
+De plus, certaines parties complexes à appréhender dans le code sont commentées afin de faciliter au mieux la compréhension de celles-ci.
+Enfin, j'ai rajouté des commentaires "TODO :", pour indiquer les fonctionnalités à compléter, à améliorer ou à créer. Il existe une extension sur Visual Studio Code (TodoTree) qui permet de voir tous les "TODO :" du projet sous la forme d'une liste déroulante, il est ainsi facile de voir par où commencer.
+
+\subsection{Difficultés rencontrées}
+
+La difficulté majeure du développement de cette application est liée à la nomenclature des fichiers d'entrée. Les informations du modèle sont de simples fichiers texte écrits "à la main", avec beaucoup de chiffres et peu de façons de les agencer de façon lisible et pratique à parcourir via le code. Peut-être qu'un autre format de fichier à l'avenir pourrait être une bonne idée, ou au moins un intermédiaire entre la sortie du modèle et l'entrée de l'application pour formaliser les données, ce qui permettrait également de rassembler les 3 fichiers dans un seul.\\
+
+Le fichier de sortie du modèle aka la solution est également incomplète, car comme dit plus haut on dispose pour l'instant uniquement de la répartition des villes dans chaque tube, sans avoir des quantités précises échangées entre chacune d'entre elles. M.Billaut a développé plusieurs heuristiques avec chacune leur fonction, mais il n'a pas eu le temps de les combiner en un fichier de solution utilisable par l'application.\\
+
+Cela a aussi un impact sur le développement du lien entre le modèle et l'application. En effet, elle ne dispose pas encore de Backend qui pourrait permettre une communication via une base de données, les fichiers d'entrée présents dans l'archive m'ont été envoyés par mail. Nous n'avons à la fois pas de moyen de comparer la différence entre la solution optimale et celle modifiée par l'utilisateur à cause du manque d'un format de fichier commun, ni un moyen d'exécuter une heuristique via l'application.\\ 
+
+Enfin, à cause du temps relativement court pour développer l'application (à partir de fin janvier donc environ 2mois), j'ai décidé de ne pas faire de cahier de spécifications afin de gagner du temps, d'autant plus que M.Billaut m'avait donné "carte blanche" en termes de visuels. Cela m'a permis de gagner du temps sur les fonctionnalités développées mais j'en ai aussi perdu en tâtonnant entre différentes façons de modéliser le problème, avant de me concentrer sur la partie visualisation et de laisser la partie lien modèle/application pour plus tard.
+
+\chapter{Bilan du PRD}
+
+\section{Semestre 9}
+
+Toute la partie de prise en main du sujet et la rédaction du cahier des spécifications s'est déroulée sans accroc et même avec un peu d'avance, étant donné qu'il n'y avait pas énormément de documentation à consulter et que le 1er modèle imaginé possède peu de fonctionnalités.\\
 Cependant la 2ème modélisation avec la contrainte de congélation a pris plus de temps que prévu, suite à des difficultés liées à l'écriture des contraintes et la façon dont Gusek fonctionne, entraînant des retards sur le début du S10.\\
-Dans l'idéal les contraintes de congélation et d'\gls{aliquotage} seront fonctionnelles avant la rentrée, afin d'enchaîner rapidement sur l'implémentation à l'aide d'un solveur.
+Ce n'est que mi-janvier que j'ai réussi à avoir un modèle cohérent et assez satisfaisant vis à vis des contraintes initiales, et que M.Billaut et Mme.Vinot ont décidé de s'occuper de la suite du modèle à l'aide d'heuristiques afin que je puisse entamer le développement de l'application.
 
+\section{Semestre 10}
+
+Bien que le semestre 10 ait commencé avec des retards par rapport au planning initial, et malgré le temps restant assez court pour le reste du projet, la majorité des attendus de l'application ont été réalisés de façon satisfaisante et prometteuse pour la suite de ce projet.\\
+La documentation du code et du fonctionnement général du système modèle/visualisation a été menée à bien, je considère donc ce PRD comme une réussite personnelle et j'espère le voir un jour utilisé au sein de recherches médicales. 
 
 \begin{appendix}
 \selectlanguage{french}
 
 \chapter{Planification, gestion de projet}   
 
-\section{Evolution du projet}
+\section{Évolution du projet}
 
-Le diagramme de Gantt initial :
+Le diagramme de Gantt initial pour le S9:
 \begin{figure*}[ht]
     \centering
     \includegraphics[width=\textwidth]{pic/gantts91.png}
-    \caption{Diagramme de Gantt initial}
+    \caption{Diagramme de Gantt initial (S9)}
 \end{figure*}
 
-Le diagramme de Gantt final :
+Le diagramme de Gantt final pour le S9 :
 \begin{figure*}[ht]
     \centering
     \includegraphics[width=\textwidth]{pic/gantts92.png}
-    \caption{Diagramme de Gantt final}
+    \caption{Diagramme de Gantt final (S9)}
 \end{figure*}
 
 Comme dit dans le bilan, la rédaction de l'état de l'art et du cahier de spécifications s'est avérée plus courte que prévue, ce qui m'a permis de commencer la 2ème modélisation plus tôt.\\
-Malgré cela j'ai quand même pris du retard sur le S10 car je n'ai pas réussi à faire en sorte que la modélisation soit fonctionnelle avant la soutenance (elle marche dans certains cas mais il y a encore des bugs).
-Dans l'ensemble j'ai plutôt bien respecté le planning initial.
+Malgré cela j'ai quand même pris du retard sur le S10 car je n'ai pas réussi à faire en sorte que la modélisation soit fonctionnelle et complète avant la soutenance.
+Dans l'ensemble j'ai plutôt bien respecté le planning initial.\\
+
+Pour le semestre 10, il n'y a pas vraiment eu de Gantt initial, j'ai très rapidement commencé à développer et je n'avais pas de sprints ou de livrables à donner avec des deadlines, le diagramme de Gantt suivant est un résumé de mon organisation pour ce semestre:
+
+\begin{figure*}[ht]
+    \centering
+    \includegraphics[width=\textwidth]{pic/gantts10.png}
+    \caption{Diagramme de Gantt (S10)}
+\end{figure*}
+
+La dernière version du modèle m'a pris une grande partie du mois de janvier, et j'ai enchaîné avec la recherche de l'environnement de développement qui a pris un peu plus de temps que voulu, comme expliqué plus bas dans la description de la tâche.
 
 \section{Description des tâches}
 
@@ -569,7 +695,7 @@ Dans l'ensemble j'ai plutôt bien respecté le planning initial.
     \item Date de fin: 06/11/2023
     \item Durée: 2 semaines
     \item
-        Description: Réparation des bugs présents dans le modèle initial fourni et développpement d'une première version du modèle simpliste.\\
+        Description: Réparation des bugs présents dans le modèle initial fourni et développement d'une première version du modèle simpliste.\\
         Discussion avec M.Billaut sur la suite du modèle.
 \end{itemize}
 
@@ -633,14 +759,94 @@ Dans l'ensemble j'ai plutôt bien respecté le planning initial.
         Description: Création du support pour la soutenance du semestre 9 et préparation de la soutenance en elle-même. 
 \end{itemize}
 
+\paragraph{Tâche 11: Dernière version du modèle}
+
+\begin{itemize}
+    \item Date de début: 01/01/2024
+    \item Date de fin: 19/01/2024
+    \item Durée: 3 semaines
+    \item
+        Description: Développement de la version finale du modèle, fonctionnelle avec les contraintes de congélation et d'\gls{aliquotage}. Par la suite, la solution provient des \glspl{heuristique} développées par M.Billaut. 
+\end{itemize}
+
+\paragraph{Tâche 12: Recherche de l'environnement}
+
+\begin{itemize}
+    \item Date de début: 22/01/2024
+    \item Date de fin: 02/02/2024
+    \item Durée: 2 semaines
+    \item
+        Description: Recherche de l'environnement de développement idéal.
+        En 1er lieu je cherchais à faciliter la connexion entre l'outil de visualisation et le modèle, avant de me concentrer sur l'application afin d'avoir rapidement un visuel de la solution. J'avais privilégié une application "bureau" en C\# par exemple, mais je me suis rabattu sur du développement web puis du Angular vu mon expérience avec ce framework.
+\end{itemize}
+
+\paragraph{Tâche 13: V1 de l'application}
+
+\begin{itemize}
+    \item Date de début: 05/02/2024
+    \item Date de fin: 27/02/2024
+    \item Durée: 3 semaines
+    \item
+        1ère version simplifiée de l'application, comprenant la carte interactive avec un formulaire incomplet, pouvant afficher des arcs entre différents villes en fonction du choix. Il n'y avait pas encore de lien avec les fichiers d'entrée et de sortie du modèle/heuristique. 
+\end{itemize}
+
+\paragraph{Tâche 13: V2 de l'application}
+
+\begin{itemize}
+    \item Date de début: 28/02/2024
+    \item Date de fin: 19/03/2024
+    \item Durée: 3 semaines
+    \item
+        2ème version de l'application, comprenant la carte interactive avec un formulaire exhaustif, et un tableau d'arcs qui s'initialise de façon dynamique avec le choix du formulaire. L'application prend en entrée les 3 fichiers mentionnés plus haut, mais ne permet pas une communication avec le modèle directement. 
+\end{itemize}
+
+\paragraph{Tâche 14: Rédaction de la documentation}
+
+\begin{itemize}
+    \item Date de début: 18/03/2024
+    \item Date de fin: 22/03/2024
+    \item Durée: 1 semaine
+    \item
+        Rédaction de la documentation du code avec Compodoc, et rajout de commentaires et de TODO pour faciliter la lecture et la reprise du projet.
+\end{itemize}
+
+\paragraph{Tâche 15: Rédaction du rapport}
+
+\begin{itemize}
+    \item Date de début: 25/03/2024
+    \item Date de fin: 05/04/2024
+    \item Durée: 2 semaines
+    \item
+        Rédaction de ce rapport.
+\end{itemize}
+
+\paragraph{Tâche 16: Préparation de la soutenance}
+
+\begin{itemize}
+    \item Date de début: 25/03/2024
+    \item Date de fin: 04/04/2024
+    \item Durée: 2 semaines
+    \item
+        Préparation pour la soutenance finale de ce PRD.
+\end{itemize}
+
 \chapter{Cahier de Spécifications}
 
-\section{spécifications Fonctionnelles}
-Il n'y aura que 3 fonctionnalités à développer pour ce projet, à savoir : 
+\section{Spécifications fonctionnelles}
+Il n'y a que 3 fonctionnalités à développer pour le modèle, à savoir : 
 \begin{itemize}
     \item Lecture des fichiers d'entrée
     \item Résolution du modèle
     \item Création des fichiers de sortie
+\end{itemize}
+
+Pour l'outil de visualisation, elles sont au nombre de 5:
+\begin{itemize}
+    \item Création d'un objet Solution
+    \item Permettre la sélection d'un tube
+    \item Afficher les arcs liés au tube choisi
+    \item Pouvoir modifier les arcs d'un tube
+    \item Sauvegarder les modifications
 \end{itemize}
 
 %~ \setcounter{secnumdepth}{2}
@@ -663,6 +869,8 @@ Il n'y aura que 3 fonctionnalités à développer pour ce projet, à savoir :
         Pré-conditions : Le fichier doit être conforme (bon format, bonne nomenclature, ect...) \\
         Post-conditions : Rien
 \end{description}
+
+\pagebreak
 
 \subsection{Définition de la fonction 2 : Résolution du modèle}
 
@@ -700,28 +908,99 @@ Il n'y aura que 3 fonctionnalités à développer pour ce projet, à savoir :
         Post-conditions : Aucune
 \end{description}
 
+\subsection{Définition de la fonction 4 : Création d'un objet Solution}
+
+\paragraph{Description de la fonction 4:}
+
+\begin{description}
+    \item[Fichiers d'entrée] ~ \\
+        Entrée : Fichier d'entrée et de sortie du modèle + la liste des villes à afficher.\\ 
+        Sortie : Rien.\\
+        Pré-conditions : Les fichiers doivent être récupérés et rangés dans les dossiers assets/map\_data et assets/solution\__data\\
+        Post-conditions : Aucune.
+
+    \item[Création de la solution] ~ \\
+        Entrée : Les fichiers d'entrée.\\ 
+        Sortie : Un objet JSON de type Solution\\
+        Pré-conditions : Aucune.\\
+        Postconditions : L'objet est correctement rempli avec les informations requises (répartition des tubes, demande, nom des villes,...)
+\end{description}
+
+\subsection{Définition de la fonction 5 : Permettre la sélection d'un tube}
+
+\paragraph{Description de la fonction 5:}
+
+\begin{description}
+    \item[Sélectionner un tube] ~ \\
+        Entrée : Aucune.\\ 
+        Sortie : Un objet de type Tube.\\
+        Pré-conditions : Le formulaire est initialisé grâce à l'objet Solution.\\
+        Postconditions : La variable "tube" du composant app-forme-cohorte est initialisée avec l'objet Tube choisi.
+\end{description}
+
+\subsection{Définition de la fonction 6 : Afficher les arcs d'un tube choisi}
+
+\paragraph{Description de la fonction 6:}
+
+\begin{description}
+    \item[Afficher les arcs d'un tube] ~ \\
+        Entrée : Un objet de type Tube.\\ 
+        Sortie : Aucune.\\
+        Pré-conditions : Le tube est initialisé depuis la sélection du formulaire.\\
+        Postconditions : Les arcs du tube choisi sont dessinés sur la carte et sont affichés dans le tableau d'arcs.
+\end{description}
+
+\subsection{Définition de la fonction 7 : Pouvoir modifier les arcs d'un tube}
+
+\paragraph{Description de la fonction 7:}
+
+\begin{description}
+    \item[Modifier les arcs d'un tube] ~ \\
+        Entrée : Un objet de type Tube.\\ 
+        Sortie : La liste d'arcs modifiée du tube choisi.\\
+        Pré-conditions : Le tableau d'arcs est initialisé avec les arcs du tube choisi.\\
+        Postconditions : Les modifications effectués sur le tableau sont reportées sur la carte (les flèches sont mises à jour adéquatement).
+\end{description}
+
+\subsection{Définition de la fonction 8 : Sauvegarder les modifications}
+
+\paragraph{Description de la fonction 8:}
+
+\begin{description}
+    \item[Sauvegarder les modifications apportées aux arcs d'un tube] ~ \\
+        Entrée : La liste d'arcs modifiée d'un tube.\\ 
+        Sortie : Un objet Solution contenant les nouveaux arcs.\\
+        Pré-conditions : Les modifications apportées doivent respecter les conditions de faisabilité (pas de boucle, demande de chaque centre respectée,...)
+        Postconditions : Un message est affiché en fonction de l'échec ou non de la sauvegarde.
+\end{description}
+
+\pagebreak
+
 \section{Spécifications non fonctionnelles}
 
 \subsection{Contraintes de développement et conception}
 
 Il n'y a pas d'environnement de développement imposé, mais le modèle doit répondre au mieux aux contraintes données par le Dr.Blasco.
+Idem pour l'application, les choix technologiques étaient arbitraires et en fonction de mes propres compétences, et peuvent changer en fonction de la personne qui reprendra ce projet.
 
 \subsection{Contraintes de fonctionnement et d’exploitation}
 
 \subsubsection{Performances}
-Ce problème implique d'avoir beaucoup de contraintes qui se chevauchent, ce qui peut rendre le temps de résolution très long même avec une petite instance de données. Malgré tout, on peut espérer atteindre des temps avoisinant la minute.
+Ce problème implique d'avoir beaucoup de contraintes qui se chevauchent, ce qui peut rendre le temps de résolution très long même avec une petite instance de données. Malgré tout, on peut espérer atteindre des temps avoisinant la minute.\\
+
+Quant à l'application, elle se doit d'être fluide et ergonomique.
 
 \subsubsection{Capacités}
-Comme dit plus haut le modèle aura probablement du mal à passer à l'échelle, d'autant plus que le nombre et la complexité des contraintes ne fera qu'augmenter après chaque nouvelle version, afin d'intégrer d'éventuels changements demandés par les centres d'analyses. C'est pourquoi il faudrait limiter le nombre de villes à 10, voir même moins en fonction des capacités du modèle et de mon avancée tout au long du projet. 
+Comme dit plus haut le modèle aura probablement du mal à passer à l'échelle, d'autant plus que le nombre et la complexité des contraintes ne fera qu'augmenter après chaque nouvelle version, afin d'intégrer d'éventuels changements demandés par les centres d'analyses. C'est pourquoi il faudrait limiter le nombre de villes à 10, voir même moins en fonction des capacités du modèle.\\
+
+Il est important de noter que les capacités des heuristiques de M.Billaut surpasseront probablement celles de mon modèle, ainsi les limites du système pourront éventuellement être étendues.
 
 \subsubsection{Contrôlabilité}
-Etant le seul utilisateur du système, la seule chose pouvant améliorer la contôlabilité de celui-ci serait d'ajouter un "versionning" aux modèles créés pour garder une trace et revenir sur une ancienne version si besoin.
+Etant le seul utilisateur du système, la seule chose pouvant améliorer la contrôlabilité de celui-ci serait d'ajouter un "versionning" aux modèles et à l'application créés pour garder une trace et revenir sur une ancienne version si besoin, notamment via un gestionnaire de version comme Git.
 
 \subsubsection{Sécurité}
-Pour l'instant les données ne sont pas anonymisées et ne nécessitent pas de traitement particulier. C'est identique pour l'utilisateur, il n'y a pas encore de système de connexion prévu.                                                         
+Pour l'instant les données ne sont pas anonymisées et ne nécessitent pas de traitement particulier. C'est identique pour l'utilisateur, il n'y a pas encore de système de connexion prévu.
 
 \end{appendix}
 
 \end{document}
-
-
